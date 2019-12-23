@@ -1,0 +1,12 @@
+import scala.io.Source
+import scala.util.matching.Regex
+
+object Main {
+  def main(args: Array[String]) = {
+    val input = Source.fromFile("input")
+    val isNumber = "((-)?[0-9]+)"
+    val isID = "([a-z]+[a-zA-Z0-9_]*)"
+    val isWhiteSpace = "([\\t | \\s]+)"
+    val isKeyword = "([def|if|then|else, skip, while, do, repeat, until, break and continue. ])"
+  }
+}
