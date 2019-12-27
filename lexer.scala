@@ -1,12 +1,13 @@
+package lexer
 import scala.io.Source
 import scala.util.matching.Regex
 import java.util.regex.Pattern
 
 class Token(var tokenType: String,  var key: String = "") {}
 
-object Main {
-  def main(args: Array[String]) = {
-    val input = Source.fromFile(args(0)).mkString
+class Lexer {
+  def lex(fileName: String): Iterator[Token] =   {
+    val input = Source.fromFile(fileName).mkString
     val isInteger = "(-?[0-9]+)"
     val isID = "([a-z]+[a-zA-Z0-9_]*)"
     val isKeyword = "(def|if|then|else|skip|while|do|repeat|until|break|and|continue)"
@@ -23,9 +24,9 @@ object Main {
         case x if Pattern.matches(isInteger,x) => tokens = tokens :+ new Token("Integer", x)
         case x if Pattern.matches(isOp,x) => tokens = tokens :+ new Token("Operator", x)
         case x if Pattern.matches(isWhitespace,x) => 
-        case x  => throw new Exception("Lexical error - Invalid Identifier: "+x(0))
+        case x  => throw new Exception("Lexical error - Invalid Identifier: "+x.split(" ")(0))
       }
     }
-    tokens.foreach(t => println(t.tokenType, t.key))
+    return tokens.toIterator
   }
 }
